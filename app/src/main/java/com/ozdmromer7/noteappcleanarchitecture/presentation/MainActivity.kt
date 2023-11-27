@@ -1,4 +1,4 @@
-package com.ozdmromer7.noteappcleanarchitecture
+package com.ozdmromer7.noteappcleanarchitecture.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ozdmromer7.noteappcleanarchitecture.ui.theme.NoteAppCleanArchitectureTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
