@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "NoteAppCleanArchitecture"
 include(":app")
+include(":data")
