@@ -4,7 +4,15 @@ import android.provider.ContactsContract.CommonDataKinds.Note
 import androidx.room.Database
 import androidx.room.RoomDatabase
 
-@Database(entities = [Note::class], version = 1)
-abstract class NoteDatabase : RoomDatabase() {
-    abstract fun noteDao():NotesDao
-}
+    @Database(
+        entities = [Note::class],
+        version = 1
+    )
+    abstract class NoteDatabase : RoomDatabase() {
+        abstract fun noteDao(): NotesDao
+
+         companion object {
+
+            const val DATABASE_NAME = "notes_database"
+         }
+    }
