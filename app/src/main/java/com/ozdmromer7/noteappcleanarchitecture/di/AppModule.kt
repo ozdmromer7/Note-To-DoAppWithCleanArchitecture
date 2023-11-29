@@ -7,6 +7,7 @@ import com.ozdmromer7.noteappcleanarchitecture.data.repository.NoteRepositoryImp
 import com.ozdmromer7.noteappcleanarchitecture.domain.repository.NoteRepository
 import com.ozdmromer7.noteappcleanarchitecture.domain.use_case.AddNoteUseCase
 import com.ozdmromer7.noteappcleanarchitecture.domain.use_case.DeleteNoteUseCase
+import com.ozdmromer7.noteappcleanarchitecture.domain.use_case.GetNoteByIdUseCase
 import com.ozdmromer7.noteappcleanarchitecture.domain.use_case.GetNotesUseCase
 import com.ozdmromer7.noteappcleanarchitecture.domain.use_case.NoteUseCases
 import dagger.Module
@@ -33,7 +34,7 @@ object AppModule {
     @Singleton
     fun provideNoteRepository(noteDatabase: NoteDatabase):NoteRepository{
         return NoteRepositoryImpl(
-            notesDao = noteDatabase.noteDao())
+            notesDao = noteDatabase.noteDao)
     }
 
     @Provides
@@ -42,7 +43,8 @@ object AppModule {
         return NoteUseCases(
             getNotesUseCase = GetNotesUseCase(noteRepository),
             deleteNoteUseCase = DeleteNoteUseCase(noteRepository),
-            addNoteUseCase = AddNoteUseCase(noteRepository)
+            addNoteUseCase = AddNoteUseCase(noteRepository),
+            getNoteByIdUseCase = GetNoteByIdUseCase(noteRepository)
         )
     }
 }

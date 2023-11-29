@@ -1,5 +1,7 @@
 package com.ozdmromer7.noteappcleanarchitecture.presentation.notes
 
+import android.app.Application
+import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -18,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotesViewModel @Inject constructor(
-    private val noteUseCases: NoteUseCases
+    private val noteUseCases: NoteUseCases,
+    private val application: Application
 ) : ViewModel() {
 
     private val _state = mutableStateOf(NotesState())
@@ -26,7 +29,7 @@ class NotesViewModel @Inject constructor(
 
     private var deletedNote: Notes? = null
 
-    private var getNotesJob:Job?=null
+    private var getNotesJob: Job? = null
 
     init {
         getNotes(NoteOrder.Date(OrderType.Descending))
@@ -38,7 +41,8 @@ class NotesViewModel @Inject constructor(
             is NotesEvents.Order -> {
 
                 if (state.value.noteOrder::class == events.noteOrder::class &&
-                    state.value.noteOrder.orderType == events.noteOrder.orderType) {
+                    state.value.noteOrder.orderType == events.noteOrder.orderType
+                ) {
                     return
                 }
                 getNotes(events.noteOrder)
@@ -58,7 +62,7 @@ class NotesViewModel @Inject constructor(
 
                 viewModelScope.launch {
 
-                    noteUseCases.addNoteUseCase(deletedNote ?: return@launch)
+                    noteUseCases.addNoteUseCase(deletedNote ?: return@launch, context = application)
                     deletedNote = null
                 }
 
@@ -69,11 +73,12 @@ class NotesViewModel @Inject constructor(
                     isOrderSectionVisible = !state.value.isOrderSectionVisible
                 )
             }
-        } 
+        }
     }
-    private fun getNotes(noteOrder: NoteOrder){
+
+    private fun getNotes(noteOrder: NoteOrder) {
         getNotesJob?.cancel()
-        getNotesJob=noteUseCases.getNotesUseCase(noteOrder)
+        getNotesJob = noteUseCases.getNotesUseCase(noteOrder)
             .onEach {
                 _state.value = state.value.copy(
                     notes = it, noteOrder = noteOrder

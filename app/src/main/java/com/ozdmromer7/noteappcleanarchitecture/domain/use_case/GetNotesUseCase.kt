@@ -7,7 +7,8 @@ import com.ozdmromer7.noteappcleanarchitecture.domain.util.OrderType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class GetNotesUseCase(private val repository: NoteRepository) {
+class GetNotesUseCase(
+    private val repository: NoteRepository) {
 
     operator fun invoke(noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending)): Flow<List<Notes>> {
 

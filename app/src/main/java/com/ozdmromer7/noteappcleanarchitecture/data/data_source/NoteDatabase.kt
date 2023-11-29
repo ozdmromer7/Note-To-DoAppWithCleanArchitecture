@@ -1,18 +1,19 @@
 package com.ozdmromer7.noteappcleanarchitecture.data.data_source
 
-import android.provider.ContactsContract.CommonDataKinds.Note
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.ozdmromer7.noteappcleanarchitecture.domain.model.Notes
 
-    @Database(
-        entities = [Note::class],
-        version = 1
-    )
-    abstract class NoteDatabase : RoomDatabase() {
-        abstract fun noteDao(): NotesDao
+@Database(
+    entities = [Notes::class],
+    version = 1
+)
+abstract class NoteDatabase : RoomDatabase() {
 
-         companion object {
+    abstract val noteDao: NotesDao
 
-            const val DATABASE_NAME = "notes_database"
-         }
+    companion object {
+
+        const val DATABASE_NAME = "notes_database"
     }
+}
